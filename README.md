@@ -34,14 +34,17 @@ The project is organized as follows:
 Follow these steps to set up the project environment:
 
 1. Clone the repository:  
+
   ```bash
-  git clone <your-repository-url>  
-  cd <repository-name>
+  git clone https://github.com/Jamessurapat26/Stress_Classification_RNN_Tensorflow.git 
+  cd Stress_Classification_RNN_Tensorflow
   ```
 
 2. Create a Python virtual environment:  
   It's highly recommended to use a virtual environment to manage project dependencies and avoid conflicts.  
-  * **Using venv (Python 3 built-in):**  
+
+* **Using venv (Python 3 built-in):**  
+
     ```bash
     python3 -m venv venv
 
@@ -53,7 +56,8 @@ Follow these steps to set up the project environment:
     .\venv\Scripts\activate
     ```
 
-  * **Using conda (if you have Anaconda/Miniconda installed):**  
+* **Using conda (if you have Anaconda/Miniconda installed):**  
+
     ```bash
     # Replace stress_env with your preferred environment name
     conda create --name stress_env python=3.8  
@@ -61,6 +65,7 @@ Follow these steps to set up the project environment:
     ```
 
 3. Install the required dependencies:  
+
   ```bash
   pip install -r requirements.txt
   ```
