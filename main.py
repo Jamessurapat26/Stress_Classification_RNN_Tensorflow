@@ -75,7 +75,7 @@ print(f"y train shape : {y_train.shape}")
 tuner = kt.BayesianOptimization(
     MyHyperModel(),
     objective="val_accuracy",        # หรือเปลี่ยนเป็น metric อื่นที่อยาก optimize
-    max_trials=2,                 # กี่ combinations ของ hyperparameter ที่จะลอง
+    max_trials=100,                 # กี่ combinations ของ hyperparameter ที่จะลอง
     # executions_per_trial=1,           # วิ่งแต่ละครั้งกี่รอบ (สำหรับลด randomness)
     directory='my_tuner_results',
     project_name='stress_rnn',
@@ -88,7 +88,7 @@ tuner.search(
 )
 
 
-print(tuner.results_summary())
+print(tuner.results_summary(num_trials=100))
 
 f = io.StringIO()
 with redirect_stdout(f):
