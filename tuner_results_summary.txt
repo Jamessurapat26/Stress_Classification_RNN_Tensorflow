@@ -1,0 +1,50 @@
+Results summary
+Results in my_tuner_results\stress_rnn
+Showing 10 best trials
+Objective(name="val_accuracy", direction="max")
+
+Trial 0 summary
+Hyperparameters:
+units: 96
+dropout: 0.0
+num_layers: 2
+optimizer: sgd
+learning_rate: 0.00018682425489218886
+Traceback (most recent call last):
+  File "C:\Users\james\miniconda3\envs\py310\lib\site-packages\keras_tuner\src\engine\base_tuner.py", line 274, in _try_run_and_update_trial
+    self._run_and_update_trial(trial, *fit_args, **fit_kwargs)
+  File "C:\Users\james\miniconda3\envs\py310\lib\site-packages\keras_tuner\src\engine\base_tuner.py", line 239, in _run_and_update_trial
+    results = self.run_trial(trial, *fit_args, **fit_kwargs)
+  File "C:\Users\james\miniconda3\envs\py310\lib\site-packages\keras_tuner\src\engine\tuner.py", line 314, in run_trial
+    obj_value = self._build_and_fit_model(trial, *args, **copied_kwargs)
+  File "C:\Users\james\miniconda3\envs\py310\lib\site-packages\keras_tuner\src\engine\tuner.py", line 233, in _build_and_fit_model
+    results = self.hypermodel.fit(hp, model, *args, **kwargs)
+  File "D:\StressProject\Model_Optimize\function\hypermodel.py", line 93, in fit
+    epochs = hp.get('epochs')
+  File "C:\Users\james\miniconda3\envs\py310\lib\site-packages\keras_tuner\src\engine\hyperparameters\hyperparameters.py", line 246, in get
+    raise KeyError(f"{name} does not exist.")
+KeyError: 'epochs does not exist.'
+
+
+Trial 1 summary
+Hyperparameters:
+units: 128
+dropout: 0.1
+num_layers: 4
+optimizer: adam
+learning_rate: 0.0004257494904478956
+Traceback (most recent call last):
+  File "C:\Users\james\miniconda3\envs\py310\lib\site-packages\keras_tuner\src\engine\base_tuner.py", line 274, in _try_run_and_update_trial
+    self._run_and_update_trial(trial, *fit_args, **fit_kwargs)
+  File "C:\Users\james\miniconda3\envs\py310\lib\site-packages\keras_tuner\src\engine\base_tuner.py", line 239, in _run_and_update_trial
+    results = self.run_trial(trial, *fit_args, **fit_kwargs)
+  File "C:\Users\james\miniconda3\envs\py310\lib\site-packages\keras_tuner\src\engine\tuner.py", line 314, in run_trial
+    obj_value = self._build_and_fit_model(trial, *args, **copied_kwargs)
+  File "C:\Users\james\miniconda3\envs\py310\lib\site-packages\keras_tuner\src\engine\tuner.py", line 233, in _build_and_fit_model
+    results = self.hypermodel.fit(hp, model, *args, **kwargs)
+  File "D:\StressProject\Model_Optimize\function\hypermodel.py", line 93, in fit
+    epochs = hp.get('epochs')
+  File "C:\Users\james\miniconda3\envs\py310\lib\site-packages\keras_tuner\src\engine\hyperparameters\hyperparameters.py", line 246, in get
+    raise KeyError(f"{name} does not exist.")
+KeyError: 'epochs does not exist.'
+
