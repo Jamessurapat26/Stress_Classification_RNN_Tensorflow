@@ -60,7 +60,7 @@ Follow these steps to set up the project environment:
 
     ```bash
     # Replace stress_env with your preferred environment name
-    conda create --name stress_env python=3.8  
+    conda create --name stress_env python=3.10  
     conda activate stress_env
     ```
 
