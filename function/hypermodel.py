@@ -8,7 +8,7 @@ from tensorflow.keras import backend
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import KFold
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, f1_score
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, f1_score, precision_score, recall_score
 import json
 import time
 import seaborn as sns
@@ -20,14 +20,18 @@ import os
 n_steps = 5
 class MyHyperModel(kt.HyperModel):
 
-    def __init__(self):
+    def __init__(self, num_features):
         self.trial_id = 1
+        self.num_features = num_features - 2
         print("MyHyperModel initialized.")
         print(f'trial_id: {self.trial_id}')
 
     def build(self, hp):
         # Get parameters from hp
-        units = hp.Int('units', min_value=32, max_value=128, step=32)
+
+        # print(self.num_features)
+
+        units = hp.Int('units', min_value=32, max_value=256, step=32)
         dropout = hp.Float('dropout', min_value=0.0, max_value=0.2, step=0.1)
         num_layers = hp.Int('num_layers', min_value=1, max_value=5)
         optimizer_name = hp.Choice('optimizer', ['adam', 'sgd'])
@@ -35,7 +39,7 @@ class MyHyperModel(kt.HyperModel):
         timesteps = n_steps # Use the defined n_steps
 
         # Define input shape
-        features = 17
+        features = self.num_features
         input_shape = (timesteps, features)
 
         model = Sequential()
@@ -101,6 +105,7 @@ class MyHyperModel(kt.HyperModel):
         kf = KFold(n_splits=n_splits)
 
         val_scores = []
+        loss_scores = []
         fold = 0
 
         for train_idx, val_idx in kf.split(X): # Use the sequenced data X_seq here
@@ -129,12 +134,14 @@ class MyHyperModel(kt.HyperModel):
             )
 
             val_scores.append(np.max(history.history['val_accuracy']))
+            loss_scores.append(np.min(history.history['val_loss']))
 
             fold += 1
 
         os.makedirs(f'result/{trial}', exist_ok=True)
 
         mean_val_accuracy = np.mean(val_scores)
+        mean_val_loss = np.mean(loss_scores)
         y_pred = model.predict(X_test)
         print("Predictions shape:", y_pred.shape)
 
@@ -151,6 +158,13 @@ class MyHyperModel(kt.HyperModel):
         # Fix the F1 score calculation by using argmax
         f1 = f1_score(y_test, np.argmax(y_pred, axis=1), average='weighted')
         print("F1 Score:", f1)
+
+        precision = precision_score(y_test, np.argmax(y_pred, axis=1), average='weighted')
+        print("Precision Score:", precision)
+
+        recall = recall_score(y_test, np.argmax(y_pred, axis=1), average='weighted')
+        print("Recall Score:", recall)
+
         # Save confusion matrix as image
         cm = confusion_matrix(y_test, np.argmax(y_pred, axis=1))
         plt.figure(figsize=(10, 8))
@@ -176,7 +190,10 @@ class MyHyperModel(kt.HyperModel):
         'epochs': epochs,
         'accuracy': float(accuracy),  # Convert numpy types to Python native types
         'mean_val_accuracy': mean_val_accuracy,
+        'mean_val_loss': mean_val_loss,
         'f1_score': f1,
+        'precision': precision,
+        'recall': recall,
         'timestamp': time.strftime("%Y-%m-%d %H:%M:%S"),
         }
 
